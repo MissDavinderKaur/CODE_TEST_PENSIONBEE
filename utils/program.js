@@ -1,24 +1,22 @@
 const read = require('read-file');
 const marked = require('marked');
-const pathExists = require('path-exists')
+const pathExists = require('path-exists');
 
-const Program = {};
+const template = read.sync(`./template.html`, 'utf8');
 
-Program.template = read.sync(`./template.html`, 'utf8');
+const staticContent = function(req, res) {
+  const validPath = pathExists.sync(`./content/${req.params.folder}/index.md`);
 
-Program.functionality = function(req, res) {
-  pathExists(`./content/${req.params.folder}/index.md`)
-  .then(()=> {
+  if (validPath) {
     const content = read.sync(`./content/${req.params.folder}/index.md`, 'utf8');
-    const page = Program.template.replace(/{{content}}/, marked(content));
+    const page = template.replace(/{{content}}/, marked(content));
 
     res.status(200);
     res.send(page);
-  })
-  .catch(() => {
+  } else {
     res.status(404);
     res.send();
-  });
+  }
 };
 
-module.exports = Program;
+module.exports = staticContent;
