@@ -10,9 +10,9 @@ describe('Tests for Acme website', () => {
     };
     res = {
       status: jest.fn(),
-      send: jest.fn(),
+      send: jest.fn().mockReturnValue('<h1 id=\"this-is-the-about-page\">This is the About page</h1>')
     };
-  })
+  });
 
   it('returns 200 for valid folder', () => {
     req.params.folder = 'about-page';
@@ -30,4 +30,12 @@ describe('Tests for Acme website', () => {
     expect(res.status).toBeCalledWith(404);
   });
 
+  it('returns html content from index.md', () => {
+    req.params.folder = 'about-page';
+
+    staticContent(req, res);
+
+    expect(res.send).toBeCalledWith(expect.stringMatching('<h1 id=\"this-is-the-about-page\">This is the About page</h1>'));
+
+  });
 });
