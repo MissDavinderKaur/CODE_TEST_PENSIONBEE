@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/MissDavinderKaur/CODE_TEST_PENSIONBEE/issues"
   },
-  "homepage": "https://github.com/MissDavinderKaur/CODE_TEST_PENSIONBEE#readme"
+  "homepage": "https://github.com/MissDavinderKaur/CODE_TEST_PENSIONBEE#readme",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
 }
